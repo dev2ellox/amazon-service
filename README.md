@@ -1,6 +1,6 @@
 # Amazon Service SDK
 
-[![Maintainer](https://img.shields.io/badge/maintainer-@elxdigital-blue.svg?style=flat-square)](https://github.com/elxdigital)
+[![Maintainer](https://img.shields.io/badge/maintainer-@elxdigital-blue.svg?style=flat-square)](https://github.com/dev2ellox)
 [![Source Code](https://img.shields.io/badge/source-elxdigital/amazon-service-blue.svg?style=flat-square)](https://github.com/elxdigital/amazon-service)
 [![PHP Version](https://img.shields.io/packagist/php-v/elxdigital/amazon-service.svg?style=flat-square)](https://packagist.org/packages/elxdigital/amazon-service)
 [![Latest Version](https://img.shields.io/github/release/elxdigital/amazon-service.svg?style=flat-square)](https://github.com/elxdigital/amazon-service/releases)
