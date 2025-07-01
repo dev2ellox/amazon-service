@@ -19,4 +19,4 @@ Integração com os serviços da Amazon, super rápida e simples de usar.
 Este pacote está disponível via [Composer](https://getcomposer.org/):
 
 ```bash
-composer require elxdigital/amazon-service
+composer require dev2ellox/amazon-service
