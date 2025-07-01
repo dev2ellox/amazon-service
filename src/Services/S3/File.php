@@ -25,7 +25,7 @@ class File
      * @return int|object|string|array
      * @throws Exception
      */
-    public function listObjects(string $bucketName): int|object|string|array
+    public function listObjects(string $bucketName)
     {
         if (!$bucketName) {
             throw new Exception("Bucket name is required");
@@ -45,7 +45,7 @@ class File
      * @return bool
      * @throws Exception
      */
-    public function createObject(string $bucketName, string $objectName, string $objectContent): bool
+    public function createObject(string $bucketName, string $objectName, string $objectContent)
     {
         if (!$bucketName) {
             throw new Exception("Bucket name is required");
@@ -81,7 +81,7 @@ class File
      * @return bool
      * @throws Exception
      */
-    public function deleteObject(string $bucketName, string $objectName): bool
+    public function deleteObject(string $bucketName, string $objectName)
     {
         if (!$bucketName) {
             throw new Exception("Bucket name is required");
