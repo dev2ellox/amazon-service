@@ -10,27 +10,27 @@ class AmazonService
     /**
      * @var string
      */
-    private static $endpoint;
+    private static string $endpoint;
     /**
      * @var object|array|int|string|null
      */
-    private static $params = '';
+    private static object|array|int|string|null $params = '';
     /**
      * @var string
      */
-    private static $query = "";
+    private static string $query = "";
     /**
      * @var string
      */
-    private static $host;
+    private static string $host;
     /**
      * @var array|object|string|int|null
      */
-    private static $callback;
+    private static array|object|string|int|null $callback;
     /**
      * @var AWSHeaderCalculator
      */
-    private static $AWSHeaderCalculator;
+    private static AWSHeaderCalculator $AWSHeaderCalculator;
 
     /**
      * @param string $host
@@ -54,7 +54,7 @@ class AmazonService
      * @param string $endpoint
      * @return void
      */
-    public static function setEndpoint(string $endpoint)
+    public static function setEndpoint(string $endpoint): void
     {
         self::$endpoint = $endpoint;
         self::$AWSHeaderCalculator->setUri($endpoint);
@@ -63,7 +63,7 @@ class AmazonService
     /**
      * @return object|int|string|array|null
      */
-    public static function getCallback()
+    public static function getCallback(): object|int|string|null|array
     {
         return self::$callback;
     }
@@ -72,7 +72,7 @@ class AmazonService
      * @param object|array|int|string|null $params
      * @return void
      */
-    public static function setParams($params)
+    public static function setParams(object|array|int|string|null $params): void
     {
         self::$params = $params;
         self::$AWSHeaderCalculator->setPayload(self::$params);
@@ -82,7 +82,7 @@ class AmazonService
      * @param array $query
      * @return void
      */
-    public static function setQuery(array $query)
+    public static function setQuery(array $query): void
     {
         self::$query = '?' . http_build_query($query);
         self::$AWSHeaderCalculator->setQuery($query);
@@ -92,7 +92,7 @@ class AmazonService
      * @param string $service
      * @return void
      */
-    public static function setService(string $service)
+    public static function setService(string $service): void
     {
         self::$AWSHeaderCalculator->setService($service);
     }
@@ -100,7 +100,7 @@ class AmazonService
     /**
      * @return string
      */
-    public static function getHost()
+    public static function getHost(): string
     {
         return self::$host;
     }
@@ -110,7 +110,7 @@ class AmazonService
      * @param string $value
      * @return void
      */
-    public static function addHeader(string $key, string $value)
+    public static function addHeader(string $key, string $value): void
     {
         self::$AWSHeaderCalculator->addHeader($key, $value);
     }
@@ -119,7 +119,7 @@ class AmazonService
      * @return void
      * @throws Exception
      */
-    public static function get()
+    public static function get(): void
     {
         if (empty(self::$endpoint)) {
             throw new Exception("Endpoint is required");
@@ -161,7 +161,7 @@ class AmazonService
      * @return void
      * @throws Exception
      */
-    public static function put()
+    public static function put(): void
     {
         if (empty(self::$endpoint)) {
             throw new Exception("Endpoint is required");
@@ -201,7 +201,7 @@ class AmazonService
      * @return void
      * @throws Exception
      */
-    public static function delete()
+    public static function delete(): void
     {
         if (empty(self::$endpoint)) {
             throw new Exception("Endpoint is required");

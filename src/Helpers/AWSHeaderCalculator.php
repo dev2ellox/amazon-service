@@ -7,47 +7,47 @@ class AWSHeaderCalculator
     /**
      * @var string
      */
-    private $host;
+    private string $host;
     /**
      * @var string
      */
-    private $accessKey;
+    private string $accessKey;
     /**
      * @var string
      */
-    private $secretKey;
+    private string $secretKey;
     /**
      * @var string
      */
-    private $method = "GET";
+    private string $method = "GET";
     /**
      * @var string
      */
-    private $region = "auto";
+    private string $region = "auto";
     /**
      * @var string
      */
-    private $service = "s3";
+    private string $service = "s3";
     /**
      * @var array
      */
-    private $headers = [];
+    private array $headers = [];
     /**
      * @var int
      */
-    private $timestamp;
+    private int $timestamp;
     /**
      * @var array
      */
-    private $query = [];
+    private array $query = [];
     /**
      * @var array|object|string
      */
-    private $payload = [];
+    private array|object|string $payload = [];
     /**
      * @var string
      */
-    private $uri = "/";
+    private string $uri = "/";
 
     /**
      *
@@ -74,7 +74,7 @@ class AWSHeaderCalculator
      * @param string $method
      * @return void
      */
-    public function setMethod(string $method)
+    public function setMethod(string $method): void
     {
         $this->method = $method;
     }
@@ -83,7 +83,7 @@ class AWSHeaderCalculator
      * @param string $service
      * @return void
      */
-    public function setService(string $service)
+    public function setService(string $service): void
     {
         $this->service = $service;
     }
@@ -92,16 +92,16 @@ class AWSHeaderCalculator
      * @param array $query
      * @return void
      */
-    public function setQuery(array $query)
+    public function setQuery(array $query): void
     {
         $this->query = $query;
     }
 
     /**
-     * @param array|object|string $payload
+     * @param array|object $payload
      * @return void
      */
-    public function setPayload($payload)
+    public function setPayload(array|object|string $payload): void
     {
         $this->payload = $payload;
     }
@@ -110,7 +110,7 @@ class AWSHeaderCalculator
      * @param string $uri
      * @return void
      */
-    public function setUri(string $uri)
+    public function setUri(string $uri): void
     {
         $this->uri = !empty($uri) ? $uri : "/";
     }
@@ -120,7 +120,7 @@ class AWSHeaderCalculator
      * @param string $value
      * @return void
      */
-    public function addHeader(string $key, string $value)
+    public function addHeader(string $key, string $value): void
     {
         $this->headers[$key] = $value;
     }
@@ -200,7 +200,7 @@ class AWSHeaderCalculator
     /**
      * @return void
      */
-    private function createSignedHeaders()
+    private function createSignedHeaders(): void
     {
         unset($this->headers['Authorization']);
         unset($this->headers['Host']);

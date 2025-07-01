@@ -8,7 +8,6 @@
 [![Build](https://img.shields.io/scrutinizer/build/g/elxdigital/amazon-service.svg?style=flat-square)](https://scrutinizer-ci.com/g/elxdigital/amazon-service)
 [![Quality Score](https://img.shields.io/scrutinizer/g/elxdigital/amazon-service.svg?style=flat-square)](https://scrutinizer-ci.com/g/elxdigital/amazon-service)
 [![Total Downloads](https://img.shields.io/packagist/dt/elxdigital/amazon-service.svg?style=flat-square)](https://packagist.org/packages/celxdigital/amazon-service)
-[![PHP Compatibility](https://img.shields.io/badge/php-7.0%20to%207.4-blue.svg?style=flat-square)]
 
 ###### Integration with Amazon services, super fast and simple to use.
 
@@ -19,18 +18,10 @@ Integração com os serviços da Amazon, super rápida e simples de usar.
 - Simple installation (Instalação simples)
 - Simple and fast use (Uso simples e rápido)
 - Composer ready and PSR-2 compliant (Pronto para o composer e compatível com PSR-2)
-- PHP 7 compatibility (Compatibilidade com PHP 7)
-
-## Requirements
-
-- PHP 7.0 - 7.4
-- ext-curl
-- ext-simplexml
-- ext-fileinfo
 
 ## Installation
 
-Amazon Service is available via Composer:
+Uploader is available via Composer:
 
 ```bash
 "elxdigital/amazon-service": "^1.0"
@@ -47,8 +38,6 @@ composer require elxdigital/amazon-service
 ###### For details on how to use, see a sample folder in the component directory. In it you will have an example of use for each class. It works like this:
 
 Para mais detalhes sobre como usar, veja a pasta example no diretório do componente. Nela terá um exemplo de uso para cada classe!
-
-> **Importante**: Esta versão foi otimizada para funcionar com PHP 7.0 até 7.4
 
 ## Contributing
 

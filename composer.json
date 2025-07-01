@@ -1,5 +1,5 @@
 {
-  "name": "dev2ellox/amazon-service",
+  "name": "elxdigital/amazon-service",
   "description": "Componente de integração com os serviços da AWS :)",
   "keywords": [
     "Object Storage",
@@ -13,7 +13,7 @@
   "authors": [
     {
       "name": "Ellox Inteligência Digital",
-      "email": "desenvolvimento2@ellox.com.br",
+      "email": "desenvolvimento@ellox.com.br",
       "role": "Developer"
     }
   ],
@@ -21,7 +21,7 @@
     "php": ">=7.0",
     "ext-curl": "*",
     "ext-simplexml": "*",
-    "guzzlehttp/guzzle": "^6.5 || ^7.0",
+    "guzzlehttp/guzzle": "^7.7",
     "ext-fileinfo": "*"
   },
   "autoload": {
