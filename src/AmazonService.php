@@ -7,38 +7,20 @@ use ElxDigital\AmazonService\Helpers\AWSHeaderCalculator;
 
 class AmazonService
 {
-    /**
-     * @var string
-     */
-    private static string $endpoint;
-    /**
-     * @var object|array|int|string|null
-     */
-    private static object|array|int|string|null $params = '';
-    /**
-     * @var string
-     */
-    private static string $query = "";
-    /**
-     * @var string
-     */
-    private static string $host;
-    /**
-     * @var array|object|string|int|null
-     */
-    private static array|object|string|int|null $callback;
-    /**
-     * @var AWSHeaderCalculator
-     */
-    private static AWSHeaderCalculator $AWSHeaderCalculator;
+    /** @var string */
+    private static $endpoint;
+    /** @var mixed */
+    private static $params = '';
+    /** @var string */
+    private static $query = "";
+    /** @var string */
+    private static $host;
+    /** @var mixed */
+    private static $callback;
+    /** @var AWSHeaderCalculator */
+    private static $AWSHeaderCalculator;
 
-    /**
-     * @param string $host
-     * @param string $accessKey
-     * @param string $secretKey
-     * @param string $region
-     */
-    public function __construct(string $host, string $accessKey, string $secretKey, string $region = 'auto')
+    public function __construct($host, $accessKey, $secretKey, $region = 'auto')
     {
         self::$AWSHeaderCalculator = new AWSHeaderCalculator(
             $host,
@@ -50,76 +32,54 @@ class AmazonService
         self::$host = $host;
     }
 
-    /**
-     * @param string $endpoint
-     * @return void
-     */
-    public static function setEndpoint(string $endpoint): void
+    public static function setEndpoint($endpoint)
     {
         self::$endpoint = $endpoint;
         self::$AWSHeaderCalculator->setUri($endpoint);
     }
 
     /**
-     * @return object|int|string|array|null
+     * @return mixed
      */
-    public static function getCallback(): object|int|string|null|array
+    public static function getCallback()
     {
         return self::$callback;
     }
 
     /**
-     * @param object|array|int|string|null $params
-     * @return void
+     * @param mixed $params
      */
-    public static function setParams(object|array|int|string|null $params): void
+    public static function setParams($params)
     {
         self::$params = $params;
         self::$AWSHeaderCalculator->setPayload(self::$params);
     }
 
-    /**
-     * @param array $query
-     * @return void
-     */
-    public static function setQuery(array $query): void
+    public static function setQuery(array $query)
     {
         self::$query = '?' . http_build_query($query);
         self::$AWSHeaderCalculator->setQuery($query);
     }
 
-    /**
-     * @param string $service
-     * @return void
-     */
-    public static function setService(string $service): void
+    public static function setService($service)
     {
         self::$AWSHeaderCalculator->setService($service);
     }
 
-    /**
-     * @return string
-     */
-    public static function getHost(): string
+    public static function getHost()
     {
         return self::$host;
     }
 
-    /**
-     * @param string $key
-     * @param string $value
-     * @return void
-     */
-    public static function addHeader(string $key, string $value): void
+    public static function addHeader($key, $value)
     {
         self::$AWSHeaderCalculator->addHeader($key, $value);
     }
 
     /**
-     * @return void
      * @throws Exception
      */
-    public static function get(): void
+    public static function get()
     {
         if (empty(self::$endpoint)) {
             throw new Exception("Endpoint is required");
@@ -145,7 +105,6 @@ class AmazonService
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if ($httpStatus >= 200 && $httpStatus < 300) {
-
             $xml = simplexml_load_string($response);
             $json = json_encode($xml);
             self::$callback = json_decode($json);
@@ -154,14 +113,12 @@ class AmazonService
         }
 
         curl_close($curl);
-        return;
     }
 
     /**
-     * @return void
      * @throws Exception
      */
-    public static function put(): void
+    public static function put()
     {
         if (empty(self::$endpoint)) {
             throw new Exception("Endpoint is required");
@@ -187,21 +144,15 @@ class AmazonService
         curl_exec($curl);
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-        if ($httpStatus >= 200 && $httpStatus < 300) {
-            self::$callback = true;
-        } else {
-            self::$callback = false;
-        }
+        self::$callback = ($httpStatus >= 200 && $httpStatus < 300);
 
         curl_close($curl);
-        return;
     }
 
     /**
-     * @return void
      * @throws Exception
      */
-    public static function delete(): void
+    public static function delete()
     {
         if (empty(self::$endpoint)) {
             throw new Exception("Endpoint is required");
@@ -223,16 +174,11 @@ class AmazonService
             CURLOPT_HTTPHEADER => self::$AWSHeaderCalculator->generateAuthorizationHeader(),
         ]);
 
-        $response = curl_exec($curl);
+        curl_exec($curl);
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-        if ($httpStatus >= 200 && $httpStatus < 300) {
-            self::$callback = true;
-        } else {
-            self::$callback = false;
-        }
+        self::$callback = ($httpStatus >= 200 && $httpStatus < 300);
 
         curl_close($curl);
-        return;
     }
 }

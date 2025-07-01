@@ -13,7 +13,7 @@
   "authors": [
     {
       "name": "Ellox Inteligência Digital",
-      "email": "desenvolvimento@ellox.com.br",
+      "email": "desenvolvimento2@ellox.com.br",
       "role": "Developer"
     }
   ],
@@ -21,12 +21,12 @@
     "php": ">=7.0",
     "ext-curl": "*",
     "ext-simplexml": "*",
-    "guzzlehttp/guzzle": "^7.7",
-    "ext-fileinfo": "*"
+    "ext-fileinfo": "*",
+    "guzzlehttp/guzzle": "^6.5"
   },
   "autoload": {
     "psr-4": {
-      "ElxDigital\\AmazonService\\": "src"
+      "ElxDigital\\AmazonService\\": "src/"
     }
   }
 }

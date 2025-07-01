@@ -1,206 +1,114 @@
 <?php
 
 namespace ElxDigital\AmazonService\Helpers;
-use GuzzleHttp\Psr7\Utils;
+
 class AWSHeaderCalculator
 {
-    /**
-     * @var string
-     */
-    private string $host;
-    /**
-     * @var string
-     */
-    private string $accessKey;
-    /**
-     * @var string
-     */
-    private string $secretKey;
-    /**
-     * @var string
-     */
-    private string $method = "GET";
-    /**
-     * @var string
-     */
-    private string $region = "auto";
-    /**
-     * @var string
-     */
-    private string $service = "s3";
-    /**
-     * @var array
-     */
-    private array $headers = [];
-    /**
-     * @var int
-     */
-    private int $timestamp;
-    /**
-     * @var array
-     */
-    private array $query = [];
-    /**
-     * @var array|object|string
-     */
-    private array|object|string $payload = [];
-    /**
-     * @var string
-     */
-    private string $uri = "/";
+    /** @var string */
+    private $host;
+    /** @var string */
+    private $accessKey;
+    /** @var string */
+    private $secretKey;
+    /** @var string */
+    private $method = "GET";
+    /** @var string */
+    private $region = "auto";
+    /** @var string */
+    private $service = "s3";
+    /** @var array */
+    private $headers = [];
+    /** @var int */
+    private $timestamp;
+    /** @var array */
+    private $query = [];
+    /** @var mixed */
+    private $payload = [];
+    /** @var string */
+    private $uri = "/";
 
-    /**
-     *
-     */
     private const ALGORITHM = "AWS4-HMAC-SHA256";
 
-    /**
-     * @param string $host
-     * @param string $accessKey
-     * @param string $secretKey
-     * @param string $region
-     */
-    public function __construct(string $host, string $accessKey, string $secretKey, string $region = "auto")
+    public function __construct($host, $accessKey, $secretKey, $region = "auto")
     {
         $this->host = $host;
         $this->accessKey = $accessKey;
         $this->secretKey = $secretKey;
         $this->region = $region;
-
         $this->timestamp = time();
     }
 
-    /**
-     * @param string $method
-     * @return void
-     */
-    public function setMethod(string $method): void
+    public function setMethod($method)
     {
         $this->method = $method;
     }
 
-    /**
-     * @param string $service
-     * @return void
-     */
-    public function setService(string $service): void
+    public function setService($service)
     {
         $this->service = $service;
     }
 
-    /**
-     * @param array $query
-     * @return void
-     */
-    public function setQuery(array $query): void
+    public function setQuery(array $query)
     {
         $this->query = $query;
     }
 
-    /**
-     * @param array|object $payload
-     * @return void
-     */
-    public function setPayload(array|object|string $payload): void
+    public function setPayload($payload)
     {
         $this->payload = $payload;
     }
 
-    /**
-     * @param string $uri
-     * @return void
-     */
-    public function setUri(string $uri): void
+    public function setUri($uri)
     {
         $this->uri = !empty($uri) ? $uri : "/";
     }
 
-    /**
-     * @param string $key
-     * @param string $value
-     * @return void
-     */
-    public function addHeader(string $key, string $value): void
+    public function addHeader($key, $value)
     {
         $this->headers[$key] = $value;
     }
 
-    /**
-     * @param string $uri
-     * @return string
-     */
-    private function uriEncode(string $uri): string
+    private function uriEncode($uri)
     {
         return implode("/", array_map("rawurlencode", explode("/", $uri)));
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
-    private function trim(string $string): string
+    private function trim($string)
     {
         return trim($string);
     }
 
-    /**
-     * @param string $string
-     * @return string
-     */
-    private function lowercase(string $string): string
+    private function lowercase($string)
     {
         return strtolower($string);
     }
 
-    /**
-     * @param string $string
-     * @param bool $isBinary
-     * @return string
-     */
-    private function sha256hash(string $string, bool $isBinary = false): string
+    private function sha256hash($string, $isBinary = false)
     {
         return hash("sha256", $string, $isBinary);
     }
 
-    /**
-     * @param string $string
-     * @param string $key
-     * @param bool $isBinary
-     * @return string
-     */
-    private function hmacSHA256(string $string, string $key, bool $isBinary = false): string
+    private function hmacSHA256($string, $key, $isBinary = false)
     {
         return hash_hmac("sha256", $string, $key, $isBinary);
     }
 
-    /**
-     * @return array
-     */
-    public function getHeaders(): array
+    public function getHeaders()
     {
         return $this->headers;
     }
 
-    /**
-     * @return string
-     */
-    private function getISO8601DateTime(): string
+    private function getISO8601DateTime()
     {
         return gmdate('Ymd\THis\Z', $this->timestamp);
     }
 
-    /**
-     * @return string
-     */
-    private function getISO8601Date(): string
+    private function getISO8601Date()
     {
         return gmdate('Ymd', $this->timestamp);
     }
 
-    /**
-     * @return void
-     */
-    private function createSignedHeaders(): void
+    private function createSignedHeaders()
     {
         unset($this->headers['Authorization']);
         unset($this->headers['Host']);
@@ -208,14 +116,11 @@ class AWSHeaderCalculator
         unset($this->headers['X-Amz-Date']);
 
         $this->headers['Host'] = $this->host;
-        $this->headers['X-Amz-Content-Sha256'] = !empty($this->payload) ? Utils::hash($this->payload, 'sha256') : $this->sha256hash("");
+        $this->headers['X-Amz-Content-Sha256'] = !empty($this->payload) ? $this->sha256hash((string)json_encode($this->payload)) : $this->sha256hash("");
         $this->headers['X-Amz-Date'] = $this->getISO8601DateTime();
     }
 
-    /**
-     * @return string
-     */
-    private function createCanonicalQuery(): string
+    private function createCanonicalQuery()
     {
         if (empty($this->query)) return "";
         ksort($this->query);
@@ -230,10 +135,7 @@ class AWSHeaderCalculator
         return http_build_query($canonicalQuery);
     }
 
-    /**
-     * @return string
-     */
-    private function createCanonicalHeaders(): string
+    private function createCanonicalHeaders()
     {
         if (empty($this->headers)) return "";
         ksort($this->headers);
@@ -242,17 +144,13 @@ class AWSHeaderCalculator
         foreach ($this->headers as $key => $value) {
             $key = $this->lowercase($this->trim($key));
             $value = $this->trim($value);
-
             $canonicalHeadersString .= $key . ":" . $value . "\n";
         }
 
         return $canonicalHeadersString;
     }
 
-    /**
-     * @return string
-     */
-    private function createCanonicalRequest(): string
+    private function createCanonicalRequest()
     {
         $httpVerb = $this->method;
         $canonicalUri = $this->uriEncode($this->uri);
@@ -264,10 +162,7 @@ class AWSHeaderCalculator
         return "{$httpVerb}\n{$canonicalUri}\n{$canonicalQuery}\n{$canonicalHeaders}\n{$signedHeaders}\n{$hashedPayload}";
     }
 
-    /**
-     * @return string
-     */
-    private function createSignature(): string
+    private function createSignature()
     {
         $dateKey = $this->hmacSHA256($this->getISO8601Date(), "AWS4{$this->secretKey}", true);
         $dateRegionKey = $this->hmacSHA256($this->region, $dateKey, true);
@@ -276,10 +171,7 @@ class AWSHeaderCalculator
         return $this->hmacSHA256("aws4_request", $dateRegionServiceKey, true);
     }
 
-    /**
-     * @return string
-     */
-    private function calculateSignature(): string
+    private function calculateSignature()
     {
         $canonicalRequest = $this->createCanonicalRequest();
         $stringToSign = self::ALGORITHM . "\n{$this->getISO8601DateTime()}\n{$this->getISO8601Date()}/{$this->region}/{$this->service}/aws4_request\n{$this->sha256hash($canonicalRequest)}";
@@ -288,10 +180,7 @@ class AWSHeaderCalculator
         return $this->hmacSHA256($stringToSign, $signingKey);
     }
 
-    /**
-     * @return array
-     */
-    public function generateAuthorizationHeader(): array
+    public function generateAuthorizationHeader()
     {
         $this->timestamp = time();
         $this->createSignedHeaders();

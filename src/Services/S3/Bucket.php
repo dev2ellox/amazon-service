@@ -12,7 +12,7 @@ class Bucket
      */
     public function __construct()
     {
-        if(!AmazonService::getHost()) {
+        if (!AmazonService::getHost()) {
             throw new Exception("AmazonService instance not found");
         }
 
@@ -20,10 +20,10 @@ class Bucket
     }
 
     /**
-     * @return int|object|string|array
+     * @return mixed
      * @throws Exception
      */
-    public function listBuckets(): int|object|string|array
+    public function listBuckets()
     {
         AmazonService::setEndpoint("/");
         AmazonService::setParams('');
@@ -37,9 +37,9 @@ class Bucket
      * @return bool
      * @throws Exception
      */
-    public function createBucket(string $bucketName): bool
+    public function createBucket($bucketName)
     {
-        if(!$bucketName) {
+        if (!$bucketName) {
             throw new Exception("Bucket name is required");
         }
 
@@ -55,9 +55,9 @@ class Bucket
      * @return bool
      * @throws Exception
      */
-    public function deleteBucket(string $bucketName): bool
+    public function deleteBucket($bucketName)
     {
-        if(!$bucketName) {
+        if (!$bucketName) {
             throw new Exception("Bucket name is required");
         }
 
