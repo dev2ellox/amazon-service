@@ -116,7 +116,11 @@ class AWSHeaderCalculator
         unset($this->headers['X-Amz-Date']);
 
         $this->headers['Host'] = $this->host;
-        $this->headers['X-Amz-Content-Sha256'] = !empty($this->payload) ? $this->sha256hash((string)json_encode($this->payload)) : $this->sha256hash("");
+        if (is_string($this->payload)) {
+            $this->headers['X-Amz-Content-Sha256'] = $this->sha256hash($this->payload);
+        } else {
+            $this->headers['X-Amz-Content-Sha256'] = $this->sha256hash("");
+        }
         $this->headers['X-Amz-Date'] = $this->getISO8601DateTime();
     }
 

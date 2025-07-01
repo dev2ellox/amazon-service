@@ -59,9 +59,7 @@ class File
             throw new Exception("Object content is required");
         }
 
-        $context = Utils::streamFor($objectContent, [
-            "size" => strlen($objectContent)
-        ]);
+        $context = $objectContent;
 
         $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
         $fileType = finfo_buffer($fileInfo, $objectContent);

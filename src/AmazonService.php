@@ -141,8 +141,17 @@ class AmazonService
             CURLOPT_HTTPHEADER => self::$AWSHeaderCalculator->generateAuthorizationHeader(),
         ]);
 
-        curl_exec($curl);
+        $response = curl_exec($curl);
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        if ($httpStatus < 200 || $httpStatus >= 300) {
+            var_dump([
+                'http_status' => $httpStatus,
+                'response' => $response,
+                'curl_error' => curl_error($curl)
+            ]);
+            die('Debug Cloudflare R2 - resposta da API');
+        }
 
         self::$callback = ($httpStatus >= 200 && $httpStatus < 300);
 
