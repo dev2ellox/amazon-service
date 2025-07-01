@@ -21,7 +21,7 @@
     "php": ">=7.0",
     "ext-curl": "*",
     "ext-simplexml": "*",
-    "guzzlehttp/guzzle": "^7.7",
+    "guzzlehttp/guzzle": "^6.5 || ^7.0",
     "ext-fileinfo": "*"
   },
   "autoload": {
